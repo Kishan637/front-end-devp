@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+            <title>To-Do App</title>
+
+            <style>
+                        body {
+                                    font-family: Arial;
+                                    background: #f2f2f2;
+                                    text-align: center;
+                        }
+
+                        .container {
+                                    background: white;
+                                    width: 350px;
+                                    margin: 100px auto;
+                                    padding: 20px;
+                                    border-radius: 10px;
+                                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                        }
+
+                        input {
+                                    padding: 10px;
+                                    width: 70%;
+                        }
+
+                        button {
+                                    padding: 10px;
+                                    cursor: pointer;
+                        }
+
+                        li {
+                                    list-style: none;
+                                    margin: 10px 0;
+                                    display: flex;
+                                    justify-content: space-between;
+                        }
+
+                        .completed {
+                                    text-decoration: line-through;
+                                    color: gray;
+                        }
+            </style>
+</head>
+
+<body>
+
+            <div class="container">
+                        <h2>To-Do List</h2>
+
+                        <input type="text" id="taskInput" placeholder="Enter task">
+                        <button onclick="addTask()">Add</button>
+
+                        <ul id="taskList"></ul>
+            </div>
+
+            <script>
+                        function addTask() {
+                                    let input = document.getElementById("taskInput");
+                                    let task = input.value;
+
+                                    if (task === "") {
+                                                alert("Enter a task!");
+                                                return;
+                                    }
+
+                                    let li = document.createElement("li");
+
+                                    li.innerHTML = `
+            <span onclick="toggleTask(this)">${task}</span>
+            <button onclick="editTask(this)">Edit</button>
+            <button onclick="deleteTask(this)">Delete</button>
+        `;
+
+                                    document.getElementById("taskList").appendChild(li);
+                                    input.value = "";
+                        }
+
+                        function deleteTask(btn) {
+                                    btn.parentElement.remove();
+                        }
+
+                        function editTask(btn) {
+                                    let span = btn.parentElement.querySelector("span");
+                                    let newTask = prompt("Edit task:", span.innerText);
+
+                                    if (newTask !== null) {
+                                                span.innerText = newTask;
+                                    }
+                        }
+
+                        function toggleTask(span) {
+                                    span.classList.toggle("completed");
+                        }
+            </script>
+
+</body>
+
+</html>

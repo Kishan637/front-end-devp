@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+            <title>Quiz App</title>
+            <style>
+                        body {
+                                    font-family: Arial;
+                                    text-align: center;
+                                    background: #f2f2f2;
+                        }
+
+                        .quiz-box {
+                                    background: white;
+                                    width: 300px;
+                                    margin: 100px auto;
+                                    padding: 20px;
+                                    border-radius: 10px;
+                                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                        }
+
+                        button {
+                                    margin-top: 10px;
+                                    padding: 10px;
+                                    cursor: pointer;
+                        }
+            </style>
+</head>
+
+<body>
+
+            <div class="quiz-box">
+                        <h2 id="question">Question</h2>
+
+                        <input type="radio" name="answer" value="0"> <span id="a"></span><br>
+                        <input type="radio" name="answer" value="1"> <span id="b"></span><br>
+                        <input type="radio" name="answer" value="2"> <span id="c"></span><br>
+
+                        <button onclick="nextQuestion()">Next</button>
+            </div>
+
+            <script>
+                        const quiz = [
+                                    {
+                                                q: "What is HTML?",
+                                                options: ["Programming Language", "Markup Language", "Database"],
+                                                answer: 1
+                                    },
+                                    {
+                                                q: "What is CSS used for?",
+                                                options: ["Styling", "Logic", "Database"],
+                                                answer: 0
+                                    },
+                                    {
+                                                q: "What is JavaScript?",
+                                                options: ["Styling", "Programming Language", "Server"],
+                                                answer: 1
+                                    }
+                        ];
+
+                        let index = 0;
+                        let score = 0;
+
+                        function loadQuestion() {
+                                    document.getElementById("question").innerText = quiz[index].q;
+                                    document.getElementById("a").innerText = quiz[index].options[0];
+                                    document.getElementById("b").innerText = quiz[index].options[1];
+                                    document.getElementById("c").innerText = quiz[index].options[2];
+                        }
+
+                        function nextQuestion() {
+                                    let answers = document.getElementsByName("answer");
+                                    let selected = -1;
+
+                                    for (let i = 0; i < answers.length; i++) {
+                                                if (answers[i].checked) {
+                                                            selected = answers[i].value;
+                                                }
+                                    }
+
+                                    if (selected == -1) {
+                                                alert("Please select an answer!");
+                                                return;
+                                    }
+
+                                    if (selected == quiz[index].answer) {
+                                                score++;
+                                    }
+
+                                    index++;
+
+                                    if (index < quiz.length) {
+                                                loadQuestion();
+                                                answers.forEach(a => a.checked = false);
+                                    } else {
+                                                document.querySelector(".quiz-box").innerHTML =
+                                                            "<h2>Your Score: " + score + "/" + quiz.length + "</h2>";
+                                    }
+                        }
+
+                        loadQuestion();
+            </script>
+
+</body>
+
+</html>
